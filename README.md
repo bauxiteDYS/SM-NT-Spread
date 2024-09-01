@@ -1,6 +1,6 @@
 # nt-spread
 
-Neotokyo SourceMod plugin that prints the spread value for each shot.
+Neotokyo SourceMod plugin that reduces the spread value for each shot.
 
 ## Changelog
 
