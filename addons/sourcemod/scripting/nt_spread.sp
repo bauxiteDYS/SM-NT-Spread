@@ -5,20 +5,38 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_VERSION "0.0.1"
+#define PRINT_SPREAD false
 
+#define PLUGIN_VERSION "0.1.0"
+
+ConVar g_cvarSpread = null;
+static bool g_pluginDisabled;
+	
 public Plugin myinfo =
 {
-	name		= "NT Spread",
-	description = "Prints the spread value for each shot",
-	author		= "Agiel",
+	name		= "NT Spread reduction",
+	description 	= "Reduces the spread value for each shot",
+	author		= "Agiel, bauxite",
 	version		= PLUGIN_VERSION,
-	url			= "https://github.com/Agiel/nt-spread"
+	url		= "https://github.com/Agiel/nt-spread"
 };
 
 public void OnPluginStart()
 {
 	CreateDetour();
+	g_cvarSpread = CreateConVar("sm_spread_reduction", "0", "0 off, 1 reduce spread by 0.79x", _, true, 0.0, true, 1.0);
+	g_cvarSpread.AddChangeHook(CvarChanged_Spread);
+}
+
+public void OnConfigsExecuted()
+{
+	g_pluginDisabled = !g_cvarSpread.BoolValue;
+}
+
+public void CvarChanged_Spread(ConVar convar, const char[] oldValue, const char[] newValue)
+{
+	g_pluginDisabled = !convar.BoolValue;
+	PrintToChatAll("[Spread] Spread reduction is now %s", g_pluginDisabled ? "disabled":"enabled");
 }
 
 void CreateDetour()
@@ -43,12 +61,16 @@ void CreateDetour()
 
 MRESReturn FireBullet(DHookParam hParams)
 {
-	if (!hParams)
+	if (g_pluginDisabled || !hParams)
 	{
-		PrintToChatAll("No params");
 		return MRES_Ignored;
 	}
-	PrintToChatAll("%f", hParams.Get(7));
-	PrintToConsoleAll("%f", hParams.Get(7));
-	return MRES_Handled;
+	
+	#if PRINT_SPREAD
+	PrintToChat(hParams.Get(1), "[Spread] %f", hParams.Get(7));
+	#endif
+	
+	float spread = hParams.Get(7);
+	hParams.Set(7, (spread * 0.79)); // set all shots to 0.79x
+	return MRES_ChangedHandled;
 }
