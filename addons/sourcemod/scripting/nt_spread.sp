@@ -24,7 +24,7 @@ public Plugin myinfo =
 public void OnPluginStart()
 {
 	CreateDetour();
-	g_cvarSpread = CreateConVar("sm_spread_reduction", "0", "0 off, 1 reduce spread by 0.4 degrees", _, true, 0.0, true, 1.0);
+	g_cvarSpread = CreateConVar("sm_spread_reduction", "0", "0 off, 1 reduce spread by 0.33 degrees", _, true, 0.0, true, 1.0);
 	g_cvarSpread.AddChangeHook(CvarChanged_Spread);
 }
 
@@ -74,7 +74,7 @@ MRESReturn FireBullet(DHookParam hParams)
 
 	if(spread > 0.016)
 	{
-		spread = spread - 0.0035;
+		spread = spread - 0.0029;
 		hParams.Set(7, spread);
 		return MRES_ChangedHandled;
 	}
