@@ -72,9 +72,9 @@ MRESReturn FireBullet(DHookParam hParams)
 	
 	float spread = hParams.Get(7);
 
-	if(spread > 0.016)
+	if(spread > 0.004)
 	{
-		spread = spread - 0.0029;
+		spread = spread - 0.0026;
 		hParams.Set(7, spread);
 		return MRES_ChangedHandled;
 	}
