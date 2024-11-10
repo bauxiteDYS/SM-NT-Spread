@@ -5,38 +5,28 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PRINT_SPREAD false
 
-#define PLUGIN_VERSION "0.1.0"
+#define DEBUG false;
 
-ConVar g_cvarSpread = null;
-static bool g_pluginDisabled;
-	
+int cwep;
+int clnt;
+int bltc[NEO_MAXPLAYERS+1];
+float lsblt[NEO_MAXPLAYERS+1];
+float crblt[NEO_MAXPLAYERS+1];
+float sprd;
+
 public Plugin myinfo =
 {
-	name		= "NT Spread reduction",
-	description 	= "Reduces the spread value for each shot",
-	author		= "Agiel, bauxite",
-	version		= PLUGIN_VERSION,
-	url		= "https://github.com/Agiel/nt-spread"
+	name = "NT Spread reduction",
+	description = "Reduces the spread value",
+	author = "bauxite, Agiel",
+	version = "0.1.3",
+	url = ""
 };
 
 public void OnPluginStart()
 {
 	CreateDetour();
-	g_cvarSpread = CreateConVar("sm_spread_reduction", "0", "0 off, 1 reduce spread by 0.33 degrees", _, true, 0.0, true, 1.0);
-	g_cvarSpread.AddChangeHook(CvarChanged_Spread);
-}
-
-public void OnConfigsExecuted()
-{
-	g_pluginDisabled = !g_cvarSpread.BoolValue;
-}
-
-public void CvarChanged_Spread(ConVar convar, const char[] oldValue, const char[] newValue)
-{
-	g_pluginDisabled = !convar.BoolValue;
-	PrintToChatAll("[Spread] Spread reduction is now %s", g_pluginDisabled ? "disabled":"enabled");
 }
 
 void CreateDetour()
@@ -61,23 +51,113 @@ void CreateDetour()
 
 MRESReturn FireBullet(DHookParam hParams)
 {
-	if (g_pluginDisabled || !hParams)
+	if (!hParams)
 	{
 		return MRES_Ignored;
 	}
 	
-	#if PRINT_SPREAD
-	PrintToChat(hParams.Get(1), "[Spread] %f", hParams.Get(7));
-	#endif
+	clnt = hParams.Get(1);
+	cwep = hParams.Get(4);
+	sprd = hParams.Get(7);
 	
-	float spread = hParams.Get(7);
-
-	if(spread > 0.004)
+	if(cwep == 2 || cwep == 25)
 	{
-		spread = spread - 0.0026;
-		hParams.Set(7, spread);
+		#if DEBUG
+		PrintToServer("spread %f", sprd);
+		PrintToServer("spread %f new", sprd - 0.0029);
+		#endif
+		
+		hParams.Set(7, sprd - 0.0029);
 		return MRES_ChangedHandled;
 	}
-
-	return MRES_Ignored;
+	
+	crblt[clnt] = GetGameTime();
+	
+	#if DEBUG
+	PrintToServer("time %f", crblt[clnt]);
+	#endif
+	
+	if((crblt[clnt] - lsblt[clnt]) > 0.5)
+	{
+		bltc[clnt] = 1;
+	}
+	else
+	{
+		++bltc[clnt];
+	}
+	
+	#if DEBUG
+	PrintToServer("bullet %d", bltc[clnt]);
+	#endif
+	
+	lsblt[clnt] = crblt[clnt];
+	
+	switch(bltc[clnt])
+	{
+		case 1:
+		{
+			#if DEBUG
+			PrintToServer("spread %f", sprd);
+			PrintToServer("spread %f new", sprd*0.75);
+			#endif
+			
+			hParams.Set(7, sprd*0.75);
+			return MRES_ChangedHandled;
+		}
+		case 2:
+		{
+			#if DEBUG
+			PrintToServer("spread %f", sprd);
+			PrintToServer("spread %f new", sprd*0.60);
+			#endif
+			
+			hParams.Set(7, sprd*0.60);
+			return MRES_ChangedHandled;
+		}
+		case 3:
+		{
+			#if DEBUG
+			PrintToServer("spread %f", sprd);
+			PrintToServer("spread %f new", sprd*0.50);
+			#endif
+			
+			hParams.Set(7, sprd*0.50);
+			return MRES_ChangedHandled;
+		}
+		case 4:
+		{
+			#if DEBUG
+			PrintToServer("spread %f", sprd);
+			PrintToServer("spread %f new", sprd*0.66);
+			#endif
+			
+			hParams.Set(7, sprd*0.66);
+			return MRES_ChangedHandled;
+		}
+		case 5:
+		{
+			#if DEBUG
+			PrintToServer("spread %f", sprd);
+			PrintToServer("spread %f new", sprd*0.75);
+			#endif
+			
+			hParams.Set(7, sprd*0.75);
+			return MRES_ChangedHandled;
+		}
+		default:
+		{
+			if(sprd > 0.016)
+			{	
+				#if DEBUG
+				PrintToServer("spread %f", sprd);
+				PrintToServer("spread %f new", sprd - 0.0029);
+				#endif
+			
+				hParams.Set(7, sprd - 0.0029);
+				return MRES_ChangedHandled;
+			}
+			
+			return MRES_Ignored;
+		}	
+	}
 }
