@@ -105,7 +105,7 @@ MRESReturn FireBullet(DHookParam hParams)
 			PrintToServer("[Spread] %f new", sprd*0.66);
 			#endif
 			
-			hParams.Set(7, sprd*0.63);
+			hParams.Set(7, sprd*0.66);
 			return MRES_ChangedHandled;
 		}
 		case 3:
@@ -115,7 +115,7 @@ MRESReturn FireBullet(DHookParam hParams)
 			PrintToServer("[Spread] %f new", sprd*0.60);
 			#endif
 			
-			hParams.Set(7, sprd*0.53);
+			hParams.Set(7, sprd*0.60);
 			return MRES_ChangedHandled;
 		}
 		case 4:
@@ -125,7 +125,7 @@ MRESReturn FireBullet(DHookParam hParams)
 			PrintToServer("[Spread] %f new", sprd*0.66);
 			#endif
 			
-			hParams.Set(7, sprd*0.63);
+			hParams.Set(7, sprd*0.66);
 			return MRES_ChangedHandled;
 		}
 		case 5:
