@@ -18,9 +18,9 @@ float sprd;
 public Plugin myinfo =
 {
 	name = "NT Spread reduction",
-	description = "Very slightly reduces the max spread, first 5 shots are more accurate, shotguns excluded",
+	description = "Reduces the spread, first 5 shots are more accurate, shotguns excluded",
 	author = "bauxite, based on Agiels spread plugin",
-	version = "0.1.6",
+	version = "0.1.7",
 	url = ""
 };
 
@@ -102,7 +102,7 @@ MRESReturn FireBullet(DHookParam hParams)
 		{
 			#if DEBUG
 			PrintToServer("[Spread] %f", sprd);
-			PrintToServer("[Spread] %f new", sprd*0.63);
+			PrintToServer("[Spread] %f new", sprd*0.66);
 			#endif
 			
 			hParams.Set(7, sprd*0.63);
@@ -112,7 +112,7 @@ MRESReturn FireBullet(DHookParam hParams)
 		{
 			#if DEBUG
 			PrintToServer("[Spread] %f", sprd);
-			PrintToServer("[Spread] %f new", sprd*0.53);
+			PrintToServer("[Spread] %f new", sprd*0.60);
 			#endif
 			
 			hParams.Set(7, sprd*0.53);
@@ -122,7 +122,7 @@ MRESReturn FireBullet(DHookParam hParams)
 		{
 			#if DEBUG
 			PrintToServer("[Spread] %f", sprd);
-			PrintToServer("[Spread] %f new", sprd*0.63);
+			PrintToServer("[Spread] %f new", sprd*0.66);
 			#endif
 			
 			hParams.Set(7, sprd*0.63);
