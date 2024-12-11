@@ -19,10 +19,18 @@ float crblt[NEO_MAXPLAYERS+1];
 float sprd;
 
 public Plugin myinfo = {
+	#if !DEBUG
 	name = "NT Spread reduction",
+	#else
+	name = "NT Spread reduction Debug",
+	#endif
 	description = "Reduces the spread, shotguns excluded",
 	author = "bauxite, based on Agiels spread plugin",
-	version = "0.3.0",
+	#if !TUNED
+	version = "0.3.1",
+	#else
+	version = "0.3.1.overtuned",
+	#endif
 	url = ""
 };
 
