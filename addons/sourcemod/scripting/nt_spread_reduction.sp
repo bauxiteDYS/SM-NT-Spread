@@ -9,7 +9,7 @@
 #define DEBUG false;
 
 // for overtuned reduction
-#define TUNED false;
+#define TUNED true;
 
 int cwep;
 int clnt;
@@ -27,9 +27,9 @@ public Plugin myinfo = {
 	description = "Reduces the spread, shotguns excluded",
 	author = "bauxite, based on Agiels spread plugin",
 	#if !TUNED
-	version = "0.3.1",
+	version = "0.3.2",
 	#else
-	version = "0.3.1.overtuned",
+	version = "0.3.2.overtuned",
 	#endif
 	url = ""
 };
@@ -212,10 +212,10 @@ MRESReturn FireBullet(DHookParam hParams)
 		if(sprd > 0.016)
 		{
 			#if DEBUG
-			PrintToServer("[Spread] %f new", sprd - 0.0035);
+			PrintToServer("[Spread] %f new", sprd - 0.0039);
 			#endif
 			
-			hParams.Set(7, sprd - 0.0035);
+			hParams.Set(7, sprd - 0.0039);
 		}
 		
 		return MRES_ChangedHandled;
@@ -251,60 +251,60 @@ MRESReturn FireBullet(DHookParam hParams)
 		{
 			#if DEBUG
 			PrintToServer("[Spread] %f", sprd);
-			PrintToServer("[Spread] %f new", sprd*0.70);
-			#endif
-			
-			hParams.Set(7, sprd*0.70);
-			return MRES_ChangedHandled;
-		}
-		case 2:
-		{
-			#if DEBUG
-			PrintToServer("[Spread] %f", sprd);
-			PrintToServer("[Spread] %f new", sprd*0.60);
-			#endif
-			
-			hParams.Set(7, sprd*0.60);
-			return MRES_ChangedHandled;
-		}
-		case 3:
-		{
-			#if DEBUG
-			PrintToServer("[Spread] %f", sprd);
-			PrintToServer("[Spread] %f new", sprd*0.53);
-			#endif
-			
-			hParams.Set(7, sprd*0.53);
-			return MRES_ChangedHandled;
-		}
-		case 4:
-		{
-			#if DEBUG
-			PrintToServer("[Spread] %f", sprd);
-			PrintToServer("[Spread] %f new", sprd*0.60);
-			#endif
-			
-			hParams.Set(7, sprd*0.60);
-			return MRES_ChangedHandled;
-		}
-		case 5:
-		{
-			#if DEBUG
-			PrintToServer("[Spread] %f", sprd);
 			PrintToServer("[Spread] %f new", sprd*0.66);
 			#endif
 			
 			hParams.Set(7, sprd*0.66);
 			return MRES_ChangedHandled;
 		}
+		case 2:
+		{
+			#if DEBUG
+			PrintToServer("[Spread] %f", sprd);
+			PrintToServer("[Spread] %f new", sprd*0.39);
+			#endif
+			
+			hParams.Set(7, sprd*0.39);
+			return MRES_ChangedHandled;
+		}
+		case 3:
+		{
+			#if DEBUG
+			PrintToServer("[Spread] %f", sprd);
+			PrintToServer("[Spread] %f new", sprd*0.33);
+			#endif
+			
+			hParams.Set(7, sprd*0.33);
+			return MRES_ChangedHandled;
+		}
+		case 4:
+		{
+			#if DEBUG
+			PrintToServer("[Spread] %f", sprd);
+			PrintToServer("[Spread] %f new", sprd*0.40);
+			#endif
+			
+			hParams.Set(7, sprd*0.40);
+			return MRES_ChangedHandled;
+		}
+		case 5:
+		{
+			#if DEBUG
+			PrintToServer("[Spread] %f", sprd);
+			PrintToServer("[Spread] %f new", sprd*0.50);
+			#endif
+			
+			hParams.Set(7, sprd*0.50);
+			return MRES_ChangedHandled;
+		}
 		case 6:
 		{
 			#if DEBUG
 			PrintToServer("[Spread] %f", sprd);
-			PrintToServer("[Spread] %f new", sprd*0.72);
+			PrintToServer("[Spread] %f new", sprd*0.60);
 			#endif
 
-			hParams.Set(7, sprd*0.72);
+			hParams.Set(7, sprd*0.60);
 			return MRES_ChangedHandled;
 		}
 		default:
@@ -313,10 +313,10 @@ MRESReturn FireBullet(DHookParam hParams)
 			{
 				#if DEBUG
 				PrintToServer("[Spread] %f", sprd);
-				PrintToServer("[Spread] %f new", sprd - 0.0035);
+				PrintToServer("[Spread] %f new", sprd - 0.0039);
 				#endif
 				
-				hParams.Set(7, sprd - 0.0035);
+				hParams.Set(7, sprd - 0.0039);
 				return MRES_ChangedHandled;
 			}
 			
